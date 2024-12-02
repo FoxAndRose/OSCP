@@ -5929,9 +5929,14 @@ Click the `Ease of Access` button on the logon screen to get a shell with `NT Au
 6. The directories that are listed in the PATH environment variable.
 
 ```c
+#check the running app
 Get-CimInstance -ClassName win32_service | Select Name,State,PathName | Where-Object {$_.State -like 'Running'}
+#check the running app deploy kind
+Get-CimInstance -ClassName win32_service | Select Name, StartMode | Where-Object {$_.Name -like '<APPLICATION-NAME>'}
 icacls .\PATH\TO\BINARY\<BINARY>.exe
 Restart-Service <SERVICE>
+#Rebot the mechine to restart the service
+shutdown /r /t 0
 $env:path
 ```
 
